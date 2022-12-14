@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "621044417838",
+    "firebase_url": "https://mad2-5df9e-default-rtdb.firebaseio.com",
+    "project_id": "mad2-5df9e",
+    "storage_bucket": "mad2-5df9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621044417838:android:f3eedd9d94cac9215c26bf",
+        "android_client_info": {
+          "package_name": "com.example.mad2_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "621044417838-jj4up3omrko4pccn5rvuv054fmom6gla.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mad2_login",
+            "certificate_hash": "647109c28e6f8e958714f9b49770ac3baf2961e0"
+          }
+        },
+        {
+          "client_id": "621044417838-s8hlog298mjfnkgq4bg86tg7ro4il21v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUoP9-qo9pH4m63phBD0A7WlYcus7Vd0M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "621044417838-s8hlog298mjfnkgq4bg86tg7ro4il21v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "621044417838-72171t6br2p83ljv6rdnhfcmt71eu3k6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mad2Login"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

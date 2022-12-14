@@ -1,0 +1,28 @@
+^C:\USERS\MAHIR\DESKTOP\GITHUB\MAD2_LOGIN\BUILD\WINDOWS\CMAKEFILES\3206E4F607F0A7DF376564C426DAED10\FLUTTER_WINDOWS.DLL.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env FLUTTER_ROOT=C:\Users\mahir\Desktop\flutter PROJECT_DIR=C:\Users\mahir\Desktop\GitHub\MAD2_login FLUTTER_ROOT=C:\Users\mahir\Desktop\flutter FLUTTER_EPHEMERAL_DIR=C:\Users\mahir\Desktop\GitHub\MAD2_login\windows\flutter\ephemeral PROJECT_DIR=C:\Users\mahir\Desktop\GitHub\MAD2_login FLUTTER_TARGET=C:\Users\mahir\Desktop\GitHub\MAD2_login\lib\main.dart DART_DEFINES=RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ== DART_OBFUSCATION=false EXTRA_FRONT_END_OPTIONS=--no-sound-null-safety TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false PACKAGE_CONFIG=C:\Users\mahir\Desktop\GitHub\MAD2_login\.dart_tool\package_config.json C:/Users/mahir/Desktop/flutter/packages/flutter_tools/bin/tool_backend.bat windows-x64 Debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\MAHIR\DESKTOP\GITHUB\MAD2_LOGIN\BUILD\WINDOWS\CMAKEFILES\F391E3C13847A08899AAE9C9FA5BCAF6\FLUTTER_ASSEMBLE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\MAHIR\DESKTOP\GITHUB\MAD2_LOGIN\WINDOWS\FLUTTER\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/mahir/Desktop/GitHub/MAD2_login/windows -BC:/Users/mahir/Desktop/GitHub/MAD2_login/build/windows --check-stamp-file C:/Users/mahir/Desktop/GitHub/MAD2_login/build/windows/flutter/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

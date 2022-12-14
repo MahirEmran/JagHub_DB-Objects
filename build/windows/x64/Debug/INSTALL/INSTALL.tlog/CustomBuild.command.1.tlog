@@ -1,0 +1,10 @@
+^C:\USERS\MAHIR\DESKTOP\GITHUB\MAD2_LOGIN\BUILD\WINDOWS\CMAKEFILES\2F64F61224BBF3F23E34992D1279592A\INSTALL_FORCE.RULE
+setlocal
+cd .
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

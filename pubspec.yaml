@@ -1,9 +1,9 @@
 name: mad2_db_dataobjects
-description: A new Flutter project.
+description: Retreives database methods and has objects.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+ # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -18,6 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
+repository: https://github.com/MahirEmran/MAD2_DB-DataObjects.git
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
@@ -58,7 +59,10 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 
-
+false_secrets:
+  - /android/app/google-services.json
+  - /ios/Runner/GoogleService-Info.plist
+  - /macos/Runner/GoogleService-Info.plist
 # flutter launch icon
 
 

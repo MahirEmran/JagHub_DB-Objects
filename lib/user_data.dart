@@ -11,6 +11,7 @@ class UserData {
   late int _grade;
   late Map<String, int> _pastPoints;
   late List<String> _joinedGroups;
+  late List<String> _pendingPurchasedItems;
 
   UserData({
     required String userId,
@@ -23,6 +24,7 @@ class UserData {
     required int grade,
     required Map<String, int> pastPoints,
     required List<String> joinedGroups,
+    required List<String> pendingPurchasedItems,
   }) {
     _userId = userId;
     _email = email;
@@ -34,6 +36,7 @@ class UserData {
     _grade = grade;
     _pastPoints = pastPoints;
     _joinedGroups = joinedGroups;
+    _pendingPurchasedItems = pendingPurchasedItems;
   }
 
   String get userId {
@@ -74,5 +77,9 @@ class UserData {
 
   List<String> get joinedGroups {
     return _joinedGroups;
+  }
+
+  List<String> get pendingPurchasedItems {
+    return _pendingPurchasedItems;
   }
 }

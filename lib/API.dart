@@ -22,6 +22,7 @@ class API {
   static const String currentEventsKey = "currentEvents";
   static const String pastPointsKey = "pastPoints";
   static const String joinedGroupsKey = "joinedGroups";
+  static const String pendingPurchasedItemsKey = "pendingPurchasedItems";
 
   static const String eventsCollection = "events";
 
@@ -54,6 +55,8 @@ class API {
       points: userInfo.get(pointsKey) as int,
       grade: userInfo.get(gradeKey) as int,
       joinedGroups: (userInfo.get(joinedGroupsKey) as List).cast<String>(),
+      pendingPurchasedItems:
+          (userInfo.get(pendingPurchasedItemsKey) as List).cast<String>(),
     );
   }
 
@@ -73,6 +76,8 @@ class API {
           joinedGroups: user.get(joinedGroupsKey) as List<String>,
           points: user.get(pointsKey) as int,
           grade: user.get(gradeKey) as int,
+          pendingPurchasedItems:
+              user.get(pendingPurchasedItemsKey) as List<String>,
         ),
       );
     }
@@ -125,6 +130,7 @@ class API {
     userInfo[pointsKey] = 0;
     userInfo[gradeKey] = 0;
     userInfo[pastPointsKey] = [];
+    userInfo[pendingPurchasedItemsKey] = [];
     database.collection(usersCollection).add(userInfo);
   }
 
@@ -204,6 +210,7 @@ class API {
           pastPoints: user.pastPoints,
           joinedGroups: user.joinedGroups,
           profilePic: user.profilePic,
+          pendingPurchasedItems: user.pendingPurchasedItems,
         ));
   }
 
@@ -214,17 +221,17 @@ class API {
     await modifyUserData(
         userId,
         UserData(
-          currentEvents: currentEvents,
-          name: user.name,
-          email: user.email,
-          userId: userId,
-          grade: user.grade,
-          points: user.points,
-          pastEvents: user.pastEvents,
-          pastPoints: user.pastPoints,
-          joinedGroups: user.joinedGroups,
-          profilePic: user.profilePic,
-        ));
+            currentEvents: currentEvents,
+            name: user.name,
+            email: user.email,
+            userId: userId,
+            grade: user.grade,
+            points: user.points,
+            pastEvents: user.pastEvents,
+            pastPoints: user.pastPoints,
+            joinedGroups: user.joinedGroups,
+            profilePic: user.profilePic,
+            pendingPurchasedItems: user.pendingPurchasedItems));
   }
 
   Future<List<String>> getUsersInEvent(String eventId) async {
@@ -256,7 +263,8 @@ class API {
               points: user.points,
               grade: user.grade,
               pastPoints: user.pastPoints,
-              joinedGroups: user.joinedGroups));
+              joinedGroups: user.joinedGroups,
+              pendingPurchasedItems: user.pendingPurchasedItems));
     }
   }
 
@@ -285,17 +293,17 @@ class API {
     await modifyUserData(
         userId,
         UserData(
-          currentEvents: user.currentEvents,
-          name: user.name,
-          email: user.email,
-          userId: userId,
-          grade: user.grade,
-          points: user.points,
-          pastEvents: user.pastEvents,
-          pastPoints: user.pastPoints,
-          joinedGroups: joinedGroups,
-          profilePic: user.profilePic,
-        ));
+            currentEvents: user.currentEvents,
+            name: user.name,
+            email: user.email,
+            userId: userId,
+            grade: user.grade,
+            points: user.points,
+            pastEvents: user.pastEvents,
+            pastPoints: user.pastPoints,
+            joinedGroups: joinedGroups,
+            profilePic: user.profilePic,
+            pendingPurchasedItems: user.pendingPurchasedItems));
   }
 
   Future<void> leaveGroup(String userId, String groupId) async {
@@ -305,16 +313,16 @@ class API {
     await modifyUserData(
         userId,
         UserData(
-          currentEvents: user.currentEvents,
-          name: user.name,
-          email: user.email,
-          userId: userId,
-          grade: user.grade,
-          points: user.points,
-          pastEvents: user.pastEvents,
-          pastPoints: user.pastPoints,
-          joinedGroups: joinedGroups,
-          profilePic: user.profilePic,
-        ));
+            currentEvents: user.currentEvents,
+            name: user.name,
+            email: user.email,
+            userId: userId,
+            grade: user.grade,
+            points: user.points,
+            pastEvents: user.pastEvents,
+            pastPoints: user.pastPoints,
+            joinedGroups: joinedGroups,
+            profilePic: user.profilePic,
+            pendingPurchasedItems: user.pendingPurchasedItems));
   }
 }

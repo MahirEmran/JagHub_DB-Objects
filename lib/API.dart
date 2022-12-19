@@ -109,6 +109,8 @@ class API {
       pastEventsKey: newUserData.pastEvents,
       pastPointsKey: newUserData.pastPoints,
       currentEventsKey: newUserData.currentEvents,
+      pendingPurchasedItemsKey: newUserData.pendingPurchasedItems,
+      joinedGroupsKey: newUserData.joinedGroups,
     });
   }
 
@@ -129,8 +131,9 @@ class API {
     userInfo[pastEventsKey] = [];
     userInfo[pointsKey] = 0;
     userInfo[gradeKey] = 0;
-    userInfo[pastPointsKey] = [];
+    userInfo[pastPointsKey] = {};
     userInfo[pendingPurchasedItemsKey] = [];
+    userInfo[joinedGroupsKey] = [];
     database.collection(usersCollection).add(userInfo);
   }
 
@@ -166,6 +169,7 @@ class API {
     eventInfo[locationKey] = newEvent.location;
     eventInfo[sourceKey] = newEvent.source;
     eventInfo[typeKey] = newEvent.type;
+    eventInfo[qrCodeKey] = newEvent.qrCode;
     database.collection(eventsCollection).add(eventInfo);
   }
 

@@ -17,7 +17,7 @@ description: Retreives database methods and has objects.
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+2
+version: 1.0.2
 repository: https://github.com/MahirEmran/MAD2_DB-DataObjects.git
 
 environment:

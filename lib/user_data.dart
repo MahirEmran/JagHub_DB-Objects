@@ -1,5 +1,3 @@
-import 'package:flutter/gestures.dart';
-
 class UserData {
   late String _userId;
   late String _email;

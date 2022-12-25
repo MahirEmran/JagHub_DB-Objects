@@ -73,14 +73,14 @@ class API {
           name: user.get(nameKey) as String,
           email: user.get(emailKey) as String,
           profilePic: user.get(profilePicKey) as String,
-          currentEvents: user.get(currentEventsKey) as List<String>,
-          pastEvents: user.get(pastEventsKey) as List<String>,
-          pastPoints: user.get(pastPointsKey) as Map<String, int>,
-          joinedGroups: user.get(joinedGroupsKey) as List<String>,
+          currentEvents: (user.get(currentEventsKey) as List).cast<String>(),
+          pastEvents: (user.get(pastEventsKey) as List).cast<String>(),
+          pastPoints: (user.get(pastPointsKey) as Map).cast<String, int>(),
           points: user.get(pointsKey) as int,
           grade: user.get(gradeKey) as int,
+          joinedGroups: (user.get(joinedGroupsKey) as List).cast<String>(),
           pendingPurchasedItems:
-              user.get(pendingPurchasedItemsKey) as List<String>,
+              (user.get(pendingPurchasedItemsKey) as List).cast<String>(),
         ),
       );
     }

@@ -1,2 +1,2 @@
-Testing out packages
+DB Methods for firebase
 1.0.1

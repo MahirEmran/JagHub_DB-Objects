@@ -1,3 +1,3 @@
-# mad2_login
+# JagHub DB/Data Objects
 
-Handling Firebase data/retreiving data & logging the user in
+Handles Firebase data methods along with objects used throughout the app.

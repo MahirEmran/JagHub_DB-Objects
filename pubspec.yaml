@@ -1,8 +1,8 @@
 name: mad2_db_dataobjects
-description: Retreives database methods and has objects.
+description: Has database methods & objects for FBLA's coding and programming event. 2022-23
 
-version: 1.0.3
-repository: https://github.com/MahirEmran/MAD2_DB-DataObjects.git
+version: 1.0.5
+repository: https://github.com/MahirEmran/JagHub_DB-Objects.git
 
 environment:
   sdk: '>=2.18.4 <3.0.0'

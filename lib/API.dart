@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'prize_data.dart';
 import 'user_data.dart';
 import 'event_data.dart';
 import 'group_data.dart';
@@ -40,6 +41,9 @@ class API {
 
   static const String imageKey = "image";
   static const String announcementsCollection = "announcements";
+
+  static const String prizesCollection = "prizes";
+  static const String pointCostKey = 'pointCost';
 
   Future<UserData> getUserData(String id) async {
     DocumentSnapshot userInfo =
@@ -331,5 +335,69 @@ class API {
             joinedGroups: joinedGroups,
             profilePic: user.profilePic,
             pendingPurchasedItems: user.pendingPurchasedItems));
+  }
+
+  Future<List<PrizeData>> getPrizeList() async {
+    List<PrizeData> prizes = [];
+    QuerySnapshot prizeInfo = await database.collection(prizesCollection).get();
+    for (QueryDocumentSnapshot prize in prizeInfo.docs) {
+      prizes.add(
+        PrizeData(
+          prizeId: prize.id,
+          name: prize.get(nameKey) as String,
+          pointCost: prize.get(pointCostKey) as int,
+          image: prize.get(imageKey) as String,
+        ),
+      );
+    }
+    return prizes;
+  }
+
+  Future<PrizeData> getPrizeData(String id) async {
+    DocumentSnapshot prizeInfo =
+        await database.collection(prizesCollection).doc(id).get();
+    return PrizeData(
+        prizeId: prizeInfo.id,
+        name: prizeInfo.get(nameKey) as String,
+        pointCost: prizeInfo.get(pointCostKey) as int,
+        image: prizeInfo.get(imageKey) as String);
+  }
+
+  Future<void> buyPrize(String prizeId, String userId) async {
+    PrizeData prize = await getPrizeData(prizeId);
+    UserData user = await getUserData(userId);
+    user.pendingPurchasedItems.add(prize.prizeId);
+    UserData newUser = UserData(
+        currentEvents: user.currentEvents,
+        userId: user.userId,
+        email: user.email,
+        profilePic: user.profilePic,
+        name: user.name,
+        pastEvents: user.pastEvents,
+        points: (user.points - prize.pointCost),
+        grade: user.grade,
+        pastPoints: user.pastPoints,
+        joinedGroups: user.joinedGroups,
+        pendingPurchasedItems: user.pendingPurchasedItems);
+    await modifyUserData(userId, newUser);
+  }
+
+  Future<void> refundPrize(String prizeId, String userId) async {
+    PrizeData prize = await getPrizeData(prizeId);
+    UserData user = await getUserData(userId);
+    user.pendingPurchasedItems.remove(prize.prizeId);
+    UserData newUser = UserData(
+        currentEvents: user.currentEvents,
+        userId: user.userId,
+        email: user.email,
+        profilePic: user.profilePic,
+        name: user.name,
+        pastEvents: user.pastEvents,
+        points: (user.points + prize.pointCost),
+        grade: user.grade,
+        pastPoints: user.pastPoints,
+        joinedGroups: user.joinedGroups,
+        pendingPurchasedItems: user.pendingPurchasedItems);
+    await modifyUserData(userId, newUser);
   }
 }

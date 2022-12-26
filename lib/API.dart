@@ -68,9 +68,6 @@ class API {
     List<UserData> users = [];
     QuerySnapshot userInfo = await database.collection(usersCollection).get();
     for (QueryDocumentSnapshot user in userInfo.docs) {
-      if (user.get(nameKey) as String == "Advaith Vijayakumar") {
-        continue;
-      }
       users.add(
         UserData(
           userId: user.id,

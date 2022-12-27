@@ -9,7 +9,7 @@ class UserData {
   late int _grade;
   late Map<String, int> _pastPoints;
   late List<String> _joinedGroups;
-  late List<String> _pendingPurchasedItems;
+  late Map<String, List<String>> _pendingPurchasedItems;
 
   UserData({
     required String userId,
@@ -22,7 +22,7 @@ class UserData {
     required int grade,
     required Map<String, int> pastPoints,
     required List<String> joinedGroups,
-    required List<String> pendingPurchasedItems,
+    required Map<String, List<String>> pendingPurchasedItems,
   }) {
     _userId = userId;
     _email = email;
@@ -77,7 +77,7 @@ class UserData {
     return _joinedGroups;
   }
 
-  List<String> get pendingPurchasedItems {
+  Map<String, List<String>> get pendingPurchasedItems {
     return _pendingPurchasedItems;
   }
 }

@@ -369,6 +369,24 @@ class API {
     return prizes;
   }
 
+  Future<List<PrizeData>> getPrizes(List<String> ids) async {
+    List<PrizeData> prizes = [];
+
+    for (int i = 0; i < ids.length; i++) {
+      prizes.add(await getPrizeData(ids[i]));
+    }
+    return prizes;
+  }
+
+  Future<List<EventData>> getEvents(List<String> ids) async {
+    List<EventData> events = [];
+
+    for (int i = 0; i < ids.length; i++) {
+      events.add(await getEvent(ids[i]));
+    }
+    return events;
+  }
+
   Future<PrizeData> getPrizeData(String id) async {
     DocumentSnapshot prizeInfo =
         await database.collection(prizesCollection).doc(id).get();

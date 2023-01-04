@@ -24,6 +24,7 @@ class API {
   static const String pastPointsKey = "pastPoints";
   static const String joinedGroupsKey = "joinedGroups";
   static const String pendingPurchasedItemsKey = "pendingPurchasedItems";
+  static const String spendablePointsKey = "spendablePoints";
 
   static const String eventsCollection = "events";
 
@@ -45,21 +46,28 @@ class API {
   static const String prizesCollection = "prizes";
   static const String pointCostKey = 'pointCost';
   static const String detailsKey = 'details';
+  static const String buyableKey = 'buyable';
 
   Future<UserData> getUserData(String id) async {
     DocumentSnapshot userInfo =
         await database.collection(usersCollection).doc(id).get();
 
-    Map<String, List<dynamic>> uncastedPendingItems =
+    Map<dynamic, dynamic> uncastedPendingItems =
         (userInfo.get(pendingPurchasedItemsKey) as Map)
-            .cast<String, List<dynamic>>();
+            .cast<dynamic, dynamic>();
+    List<String> codes = [];
+    List<List<String>> values = [];
+    uncastedPendingItems.forEach((key, value) {
+      codes.add(key.toString());
+      values.add((value as List).cast<String>());
+    });
+
     Map<String, List<String>> userPendingItems = {};
 
-    for (String id in uncastedPendingItems.keys)
-      (id) {
-        userPendingItems[id] =
-            (uncastedPendingItems[id] as List).cast<String>();
-      };
+    for (int i = 0; i < codes.length; i++) {
+      userPendingItems[codes[i]] = values[i];
+    }
+
     return UserData(
       userId: userInfo.id,
       name: userInfo.get(nameKey) as String,
@@ -72,6 +80,7 @@ class API {
       grade: userInfo.get(gradeKey) as int,
       joinedGroups: (userInfo.get(joinedGroupsKey) as List).cast<String>(),
       pendingPurchasedItems: userPendingItems,
+      spendablePoints: userInfo.get(spendablePointsKey) as int,
     );
   }
 
@@ -79,30 +88,8 @@ class API {
     List<UserData> users = [];
     QuerySnapshot userInfo = await database.collection(usersCollection).get();
     for (QueryDocumentSnapshot user in userInfo.docs) {
-      Map<String, List<dynamic>> uncastedPendingItems =
-          (user.get(pendingPurchasedItemsKey) as Map)
-              .cast<String, List<dynamic>>();
-      Map<String, List<String>> userPendingItems = {};
-
-      for (String id in uncastedPendingItems.keys)
-        (id) {
-          userPendingItems[id] =
-              (uncastedPendingItems[id] as List).cast<String>();
-        };
       users.add(
-        UserData(
-          userId: user.id,
-          name: user.get(nameKey) as String,
-          email: user.get(emailKey) as String,
-          profilePic: user.get(profilePicKey) as String,
-          currentEvents: (user.get(currentEventsKey) as List).cast<String>(),
-          pastEvents: (user.get(pastEventsKey) as List).cast<String>(),
-          pastPoints: (user.get(pastPointsKey) as Map).cast<String, int>(),
-          points: user.get(pointsKey) as int,
-          grade: user.get(gradeKey) as int,
-          joinedGroups: (user.get(joinedGroupsKey) as List).cast<String>(),
-          pendingPurchasedItems: userPendingItems,
-        ),
+        await getUserData(user.id),
       );
     }
     return users;
@@ -135,6 +122,7 @@ class API {
       currentEventsKey: newUserData.currentEvents,
       pendingPurchasedItemsKey: newUserData.pendingPurchasedItems,
       joinedGroupsKey: newUserData.joinedGroups,
+      spendablePointsKey: newUserData.spendablePoints,
     });
   }
 
@@ -158,6 +146,7 @@ class API {
     userInfo[pastPointsKey] = {};
     userInfo[pendingPurchasedItemsKey] = {};
     userInfo[joinedGroupsKey] = [];
+    userInfo[spendablePointsKey] = 0;
     database.collection(usersCollection).add(userInfo);
   }
 
@@ -239,6 +228,7 @@ class API {
           joinedGroups: user.joinedGroups,
           profilePic: user.profilePic,
           pendingPurchasedItems: user.pendingPurchasedItems,
+          spendablePoints: user.spendablePoints,
         ));
   }
 
@@ -249,17 +239,19 @@ class API {
     await modifyUserData(
         userId,
         UserData(
-            currentEvents: currentEvents,
-            name: user.name,
-            email: user.email,
-            userId: userId,
-            grade: user.grade,
-            points: user.points,
-            pastEvents: user.pastEvents,
-            pastPoints: user.pastPoints,
-            joinedGroups: user.joinedGroups,
-            profilePic: user.profilePic,
-            pendingPurchasedItems: user.pendingPurchasedItems));
+          currentEvents: currentEvents,
+          name: user.name,
+          email: user.email,
+          userId: userId,
+          grade: user.grade,
+          points: user.points,
+          pastEvents: user.pastEvents,
+          pastPoints: user.pastPoints,
+          joinedGroups: user.joinedGroups,
+          profilePic: user.profilePic,
+          pendingPurchasedItems: user.pendingPurchasedItems,
+          spendablePoints: user.spendablePoints,
+        ));
   }
 
   Future<List<String>> getUsersInEvent(String eventId) async {
@@ -282,17 +274,19 @@ class API {
       await modifyUserData(
           userIds[i],
           UserData(
-              userId: userIds[i],
-              email: user.email,
-              profilePic: user.profilePic,
-              name: user.name,
-              currentEvents: user.currentEvents,
-              pastEvents: user.pastEvents,
-              points: user.points,
-              grade: user.grade,
-              pastPoints: user.pastPoints,
-              joinedGroups: user.joinedGroups,
-              pendingPurchasedItems: user.pendingPurchasedItems));
+            userId: userIds[i],
+            email: user.email,
+            profilePic: user.profilePic,
+            name: user.name,
+            currentEvents: user.currentEvents,
+            pastEvents: user.pastEvents,
+            points: user.points,
+            grade: user.grade,
+            pastPoints: user.pastPoints,
+            joinedGroups: user.joinedGroups,
+            pendingPurchasedItems: user.pendingPurchasedItems,
+            spendablePoints: user.spendablePoints,
+          ));
     }
   }
 
@@ -331,7 +325,8 @@ class API {
             pastPoints: user.pastPoints,
             joinedGroups: joinedGroups,
             profilePic: user.profilePic,
-            pendingPurchasedItems: user.pendingPurchasedItems));
+            pendingPurchasedItems: user.pendingPurchasedItems,
+            spendablePoints: user.spendablePoints));
   }
 
   Future<void> leaveGroup(String userId, String groupId) async {
@@ -351,7 +346,8 @@ class API {
             pastPoints: user.pastPoints,
             joinedGroups: joinedGroups,
             profilePic: user.profilePic,
-            pendingPurchasedItems: user.pendingPurchasedItems));
+            pendingPurchasedItems: user.pendingPurchasedItems,
+            spendablePoints: user.spendablePoints));
   }
 
   Future<List<PrizeData>> getPrizeList() async {
@@ -366,6 +362,7 @@ class API {
           image: prize.get(imageKey) as String,
           description: prize.get(descriptionKey) as String,
           details: prize.get(detailsKey) as String,
+          buyable: prize.get(buyableKey) as bool,
         ),
       );
     }
@@ -382,16 +379,8 @@ class API {
       image: prizeInfo.get(imageKey) as String,
       description: prizeInfo.get(descriptionKey) as String,
       details: prizeInfo.get(detailsKey) as String,
+      buyable: prizeInfo.get(buyableKey) as bool,
     );
-  }
-
-  Future<List<String>> getUserPrizeInfo(String userId, String prizeId) async {
-    UserData user = await getUserData(userId);
-    List<String> info =
-        (user.pendingPurchasedItems[prizeId] as List).cast<String>();
-    String date = info[0];
-    String code = info[1];
-    return [prizeId, date, code];
   }
 
   Future<void> buyPrize(
@@ -399,7 +388,7 @@ class API {
     PrizeData prize = await getPrizeData(prizeId);
     UserData user = await getUserData(userId);
 
-    user.pendingPurchasedItems[prizeId] = [expirationDate, code];
+    user.pendingPurchasedItems[code] = [prizeId, expirationDate];
     UserData newUser = UserData(
         currentEvents: user.currentEvents,
         userId: user.userId,
@@ -407,11 +396,12 @@ class API {
         profilePic: user.profilePic,
         name: user.name,
         pastEvents: user.pastEvents,
-        points: (user.points - prize.pointCost),
+        points: user.points,
         grade: user.grade,
         pastPoints: user.pastPoints,
         joinedGroups: user.joinedGroups,
-        pendingPurchasedItems: user.pendingPurchasedItems);
+        pendingPurchasedItems: user.pendingPurchasedItems,
+        spendablePoints: (user.spendablePoints - prize.pointCost));
     await modifyUserData(userId, newUser);
   }
 
@@ -422,6 +412,7 @@ class API {
     prizeInfo[descriptionKey] = newPrize.description;
     prizeInfo[detailsKey] = newPrize.details;
     prizeInfo[pointCostKey] = newPrize.pointCost;
+    prizeInfo[buyableKey] = newPrize.buyable;
     database.collection(prizesCollection).add(prizeInfo);
   }
 }

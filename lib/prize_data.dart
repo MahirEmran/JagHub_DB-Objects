@@ -5,6 +5,7 @@ class PrizeData {
   late String _image;
   late String _description;
   late String _details;
+  late bool _buyable;
 
   PrizeData({
     required String prizeId,
@@ -13,13 +14,15 @@ class PrizeData {
     required String image,
     required String description,
     required String details,
+    required bool buyable,
   }) {
     _prizeId = prizeId;
     _name = name;
-    _pointCost = _pointCost;
+    _pointCost = pointCost;
     _image = image;
     _description = description;
     _details = details;
+    _buyable = buyable;
   }
 
   String get prizeId {
@@ -44,5 +47,9 @@ class PrizeData {
 
   String get description {
     return _description;
+  }
+
+  bool get buyable {
+    return _buyable;
   }
 }
